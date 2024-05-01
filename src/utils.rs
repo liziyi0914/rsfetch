@@ -39,7 +39,22 @@ impl SystemInfo {
         }
     }
 
-    pub async fn get_title(&self) -> String {
+    pub async fn get_hostname(&self) -> String {
+        #[cfg(target_os = "linux")]
+        {
+            exec("sh", vec![
+                "-c",
+                r#"sh -c "echo ${HOSTNAME:-$(hostname)}""#,
+            ]).await
+        }
+
+        #[cfg(target_os = "windows")]
+        {
+            exec("whoami", vec![]).await.split(r"\").nth(0).unwrap_or("").to_string()
+        }
+    }
+
+    pub async fn get_username(&self) -> String {
         #[cfg(target_os = "linux")]
         {
             exec("sh", vec![
@@ -50,7 +65,19 @@ impl SystemInfo {
 
         #[cfg(target_os = "windows")]
         {
-            exec("whoami", vec![]).await
+            exec("whoami", vec![]).await.split(r"\").nth(1).unwrap_or("").to_string()
+        }
+    }
+
+    pub async fn get_title(&self) -> String {
+        #[cfg(target_os = "linux")]
+        {
+            format!(r"{1}@{0}", self.get_hostname().await, self.get_username().await)
+        }
+
+        #[cfg(target_os = "windows")]
+        {
+            format!(r"{0}\{1}", self.get_hostname().await, self.get_username().await)
         }
     }
 
