@@ -11,7 +11,8 @@ mod utils;
 #[tokio::main]
 async fn main() {
     #[cfg(target_os = "windows")]
-    nu_ansi_term::enable_ansi_support().expect("");
+    nu_ansi_term::enable_ansi_support()
+        .expect("");
 
     let img = MacOS::get_image();
     let theme = MacOS::get_theme();
@@ -23,7 +24,7 @@ async fn main() {
         .fold(0, |a, &b| max(a, b));
 
     let s = SystemInfo::new();
-    let title = s.get_title().await;
+    let title = s.get_title().await.unwrap_or(String::new());
     let infos = s.get_infos().await;
     let infos_len = infos.len() + 2;
 

@@ -32,12 +32,12 @@ ${3}.MMMMMMMMMMMMMMMMMMMMMMMMX.
 
     fn get_theme() -> Theme {
         Theme::new(vec![
-            Style::new().fg(Color::Green),
-            Style::new().fg(Color::Yellow),
-            Style::new().fg(Color::Red),
-            Style::new().fg(Color::Red),
-            Style::new().fg(Color::Purple),
-            Style::new().fg(Color::Blue),
+            Style::new().fg(Color::Green).bold(),
+            Style::new().fg(Color::Yellow).bold(),
+            Style::new().fg(Color::Red).bold(),
+            Style::new().fg(Color::Red).bold(),
+            Style::new().fg(Color::Purple).bold(),
+            Style::new().fg(Color::Blue).bold(),
         ])
     }
 }
