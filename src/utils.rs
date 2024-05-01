@@ -1,14 +1,11 @@
 use std::path::Path;
+
 use lazy_static::lazy_static;
 use nu_ansi_term::Style;
 use regex::Regex;
 use sysinfo::{System, Users};
-use tokio::fs::File;
 use tokio::fs::read_to_string;
-use tokio::io::BufReader;
 use tokio::process::Command;
-use winreg::enums::HKEY_LOCAL_MACHINE;
-use winreg::RegKey;
 
 // pub fn get_title<'a>() -> &'a str {
 // }
@@ -276,6 +273,8 @@ impl SystemInfo {
 
         #[cfg(target_os = "windows")]
         {
+            use winreg::enums::HKEY_LOCAL_MACHINE;
+            use winreg::RegKey;
             let hklm = RegKey::predef(HKEY_LOCAL_MACHINE);
             hklm
                 .open_subkey(r"SOFTWARE\Microsoft\Windows NT\CurrentVersion\WinSAT")
