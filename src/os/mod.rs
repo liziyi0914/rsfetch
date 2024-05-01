@@ -44,7 +44,7 @@ impl Theme {
                 parts[0],
                 parts[1],
                 style_unset = get_style_unset().prefix(),
-                style_primary = self.primary_style.prefix()
+                style_primary = self.get_primary().unwrap_or(&STYLE_UNSET).prefix()
             )
         }
 

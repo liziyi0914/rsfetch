@@ -10,7 +10,8 @@ mod utils;
 
 #[tokio::main]
 async fn main() {
-    nu_ansi_term::enable_ansi_support().expect("TODO: panic message");
+    #[cfg(target_os = "windows")]
+    nu_ansi_term::enable_ansi_support().expect("");
 
     let img = MacOS::get_image();
     let theme = MacOS::get_theme();
